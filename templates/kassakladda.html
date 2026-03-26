@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Kassakladda{% endblock %}
+
+{% block content %}
+<h1>Kassakladda</h1>
+<p class="section-intro">Skráset eina nýggja kassakladdu-posting niðanfyri.</p>
+
+<form method="POST" class="form-box">
+    <div class="form-group">
+        <label for="fra_konto">Frá konto</label>
+        <input type="number" id="fra_konto" name="fra_konto" required>
+    </div>
+
+    <div class="form-group">
+        <label for="til_konto">Til konto</label>
+        <input type="number" id="til_konto" name="til_konto" required>
+    </div>
+
+    <div class="form-group">
+        <label for="upphaedd">Upphædd</label>
+        <input type="number" step="0.01" id="upphaedd" name="upphaedd" required>
+    </div>
+
+    <div class="form-group">
+        <label for="dato">Dato</label>
+        <input type="date" id="dato" name="dato" required>
+    </div>
+
+    <div class="form-group full">
+        <label for="tekstur">Tekstur</label>
+        <input type="text" id="tekstur" name="tekstur">
+    </div>
+
+    <div class="button-row">
+        <button type="submit">Goym</button>
+    </div>
+</form>
+{% endblock %}

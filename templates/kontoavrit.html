@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Kontoavrit{% endblock %}
+
+{% block content %}
+<h1>Kontoavrit</h1>
+<p class="section-intro">Her síggjast nýggjastu kassakladdu-postingarnar í skipanini.</p>
+
+{% if data %}
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Frá</th>
+                <th>Til</th>
+                <th>Upphædd</th>
+                <th>Tekstur</th>
+                <th>Dato</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] if row[1] is not none else "" }}</td>
+                <td>{{ row[2] if row[2] is not none else "" }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5].strftime("%d-%m-%Y") if row[5] else "" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-box">
+    Eingi úrslit at vísa enn.
+</div>
+{% endif %}
+{% endblock %}
