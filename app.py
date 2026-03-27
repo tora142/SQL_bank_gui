@@ -10,6 +10,10 @@ app.config.from_object(Config)
 def home():
     return render_template("index.html")
 
+@app.route("/um")
+def um():
+    return render_template("um.html")
+
 
 @app.route("/kassakladda", methods=["GET", "POST"])
 def kassakladda():
@@ -65,60 +69,26 @@ def kassakladda():
     return render_template("kassakladda.html")
 
 
-@app.route("/kontoavrit")
+@app.route("/kontoavrit", methods=["GET", "POST"])
 def kontoavrit():
     connection = None
     cursor = None
-
-    try:
-        connection = get_connection()
-        cursor = connection.cursor()
-
-        cursor.execute("""
-            SELECT KLADDA_ID, FRÁ_KONTO, TIL_KONTO, UPPHÆDD, TEKSTUR, DATO
-            FROM KASSAKLADDA
-            ORDER BY KLADDA_ID DESC
-            FETCH FIRST 20 ROWS ONLY
-        """)
-
-        rows = cursor.fetchall()
-        return render_template("kontoavrit.html", data=rows)
-
-    except Exception as e:
-        flash(f"Feilur: {e}", "danger")
-        return redirect(url_for("home"))
-
-    finally:
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
-
-
-@app.route("/um")
-def um():
-    return render_template("um.html")
-
-@app.route("/kontoyvirlit", methods=["GET", "POST"])
-def kontoyvirlit():
-    connection = None
-    cursor = None
     rows = []
-    kunda_id = None
+    konto_id = None
 
     if request.method == "POST":
-        kunda_id = request.form.get("kunda_id")
+        konto_id = request.form.get("konto_id")
 
         try:
             connection = get_connection()
             cursor = connection.cursor()
 
             cursor.execute("""
-                SELECT KONTO_ID, KONTO_NR, KONTO_NAVN, SALDO
-                FROM KONTO
-                WHERE KUNDA_ID = :kunda_id
-                ORDER BY KONTO_ID
-            """, {"kunda_id": int(kunda_id)})
+                SELECT KLADDA_ID, FRÁ_KONTO, TIL_KONTO, UPPHÆDD, TEKSTUR, DATO
+                FROM KASSAKLADDA
+                WHERE FRÁ_KONTO = :konto_id OR TIL_KONTO = :konto_id
+                ORDER BY DATO DESC
+            """, {"konto_id": int(konto_id)})
 
             rows = cursor.fetchall()
 
@@ -131,7 +101,7 @@ def kontoyvirlit():
             if connection:
                 connection.close()
 
-    return render_template("kontoyvirlit.html", data=rows, kunda_id=kunda_id)
+    return render_template("kontoavrit.html", data=rows, konto_id=konto_id)
 
 if __name__ == "__main__":
     app.run(debug=True)

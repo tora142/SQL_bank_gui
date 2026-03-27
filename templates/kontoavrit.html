@@ -1,52 +1,48 @@
 {% extends "base.html" %}
 
-{% block title %}Mínar kontur{% endblock %}
+{% block title %}Kontoavrit{% endblock %}
 
 {% block content %}
-<h1>🏦 Mínar kontur</h1>
-<p class="section-intro">Skriva KUNDA_ID fyri at síggja kontoyvirlit.</p>
+<h1>📄 Kontoavrit</h1>
+<p class="section-intro">Skriva konto ID fyri at síggja bókingar.</p>
 
 <form method="POST" class="form-grid">
+
     <div class="form-group">
-        <label for="kunda_id">KUNDA_ID</label>
-        <input type="number" id="kunda_id" name="kunda_id" required>
+        <label>KONTO_ID</label>
+        <input type="number" name="konto_id" required>
     </div>
 
-    <div class="button-row full">
-        <button type="submit">Vís kontur</button>
+    <div class="button-row">
+        <button type="submit">🔍 Vís bókingar</button>
     </div>
+
 </form>
 
-{% if kunda_id %}
-    <h2>Yvirlit fyri kunda {{ kunda_id }}</h2>
+{% if data %}
+<h2>Yvirlit fyri konto {{ konto_id }}</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Frá</th>
+        <th>Til</th>
+        <th>Upphædd</th>
+        <th>Tekstur</th>
+        <th>Dato</th>
+    </tr>
+
+    {% for row in data %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endif %}
 
-{% if data %}
-<div class="table-wrapper">
-    <table>
-        <thead>
-            <tr>
-                <th>Konto ID</th>
-                <th>Kontonummar</th>
-                <th>Konto navn</th>
-                <th>Saldo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% elif kunda_id %}
-<div class="empty-box">
-    Eingir kontur funnir hjá hesum kundanum.
-</div>
-{% endif %}
 {% endblock %}

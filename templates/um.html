@@ -4,13 +4,19 @@
 
 {% block content %}
 <h1>Um skipanina</h1>
-
-<p>
-Hetta er ein bankaskipan við GUI, sum er gjørd í Flask (Python).
-Brúkarin kann skráseta flytingar í kassakladduni og síggja kontoavrit.
+<p class="section-intro">
+    Hetta er ein bankaskipan við GUI, gjørd í Flask, HTML og CSS.
 </p>
 
-<p>
-Skipanin brúkar Oracle databasu og SQL til at goyma og lesa data.
-</p>
+<div class="empty-box">
+    <p>
+        Skipanin ger tað møguligt at arbeiða við databasu gjøgnum eina grafiska brúkaraflatu.
+        Brúkarin kann skráseta kassakladdur og síggja kontoavrit uttan at brúka SQL Developer beinleiðis.
+    </p>
+
+    <p>
+        Backend er ment í Python við Flask, meðan frontend er gjørd við HTML/CSS.
+        Oracle-databasan verður brúkt til at goyma og heinta upplýsingar.
+    </p>
+</div>
 {% endblock %}
