@@ -225,3 +225,52 @@ tbody tr:hover {
         flex-direction: column;
     }
 }
+
+/* FORM GRID */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* FULL WIDTH */
+.form-group.full {
+    grid-column: span 2;
+}
+
+/* LABEL */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* INPUT */
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* BUTTON */
+.button-row {
+    margin-top: 10px;
+}
+
+.button-row button {
+    background-color: #2f5d8a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* HOVER EFFECT */
+.button-row button:hover {
+    background-color: #24496b;
+}
