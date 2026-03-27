@@ -5,8 +5,8 @@ load_dotenv()
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
-    DB_USER = os.getenv("DB_USER")
-    DB_PASSWORD = os.getenv("DB_PASSWORD")
-    DB_HOST = os.getenv("DB_HOST", "localhost")
-    DB_PORT = os.getenv("DB_PORT", "1521")
-    DB_SERVICE = os.getenv("DB_SERVICE", "xe")
+    DB_USER = "banki"
+    DB_PASSWORD = "password"
+    DB_HOST = "192.168.9.72"
+    DB_PORT = "1521"
+    DB_SERVICE =  "xepdb1"

@@ -8,3 +8,4 @@ def get_connection():
         password=Config.DB_PASSWORD,
         dsn=dsn
     )
+print(Config.DB_HOST)
