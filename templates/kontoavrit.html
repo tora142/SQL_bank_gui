@@ -4,13 +4,13 @@
 
 {% block content %}
 <h1>📄 Kontoavrit</h1>
-<p class="section-intro">Skriva konto ID fyri at síggja bókingar.</p>
+<p class="section-intro">Skriva konto ID fyri at síggja bókingar og saldo.</p>
 
 <form method="POST" class="form-grid">
 
     <div class="form-group">
-        <label>KONTO_ID</label>
-        <input type="number" name="konto_id" required>
+        <label for="konto_id">KONTO_ID</label>
+        <input type="number" id="konto_id" name="konto_id" required>
     </div>
 
     <div class="button-row">
@@ -19,30 +19,47 @@
 
 </form>
 
+{% if konto_id %}
+    <h2>Yvirlit fyri konto {{ konto_id }}</h2>
+{% endif %}
+
+{% if saldo is not none %}
+    <div class="empty-box">
+        <strong>Saldo:</strong> {{ saldo }}
+    </div>
+{% endif %}
+
 {% if data %}
-<h2>Yvirlit fyri konto {{ konto_id }}</h2>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Frá</th>
-        <th>Til</th>
-        <th>Upphædd</th>
-        <th>Tekstur</th>
-        <th>Dato</th>
-    </tr>
-
-    {% for row in data %}
-    <tr>
-        <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
-        <td>{{ row[2] }}</td>
-        <td>{{ row[3] }}</td>
-        <td>{{ row[4] }}</td>
-        <td>{{ row[5] }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Frá</th>
+                <th>Til</th>
+                <th>Upphædd</th>
+                <th>Tekstur</th>
+                <th>Dato</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5].strftime("%d-%m-%Y") if row[5] else "" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% elif konto_id %}
+<div class="empty-box">
+    Eingar bókingar funnar fyri hesa konto.
+</div>
 {% endif %}
 
 {% endblock %}

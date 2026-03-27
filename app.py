@@ -75,6 +75,7 @@ def kontoavrit():
     cursor = None
     rows = []
     konto_id = None
+    saldo = None
 
     if request.method == "POST":
         konto_id = request.form.get("konto_id")
@@ -83,6 +84,18 @@ def kontoavrit():
             connection = get_connection()
             cursor = connection.cursor()
 
+            # Henta saldo fyri kontoin
+            cursor.execute("""
+                SELECT SALDO
+                FROM KONTO
+                WHERE KONTO_ID = :konto_id
+            """, {"konto_id": int(konto_id)})
+
+            saldo_row = cursor.fetchone()
+            if saldo_row:
+                saldo = saldo_row[0]
+
+            # Henta bókingar/flytingar
             cursor.execute("""
                 SELECT KLADDA_ID, FRÁ_KONTO, TIL_KONTO, UPPHÆDD, TEKSTUR, DATO
                 FROM KASSAKLADDA
@@ -101,7 +114,12 @@ def kontoavrit():
             if connection:
                 connection.close()
 
-    return render_template("kontoavrit.html", data=rows, konto_id=konto_id)
+    return render_template(
+        "kontoavrit.html",
+        data=rows,
+        konto_id=konto_id,
+        saldo=saldo
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
