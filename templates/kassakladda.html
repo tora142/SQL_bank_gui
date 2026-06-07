@@ -3,24 +3,29 @@
 {% block title %}Kassakladda{% endblock %}
 
 {% block content %}
-<h1>💰 Kassakladda</h1>
-<p class="section-intro">Skráset eina nýggja kassakladdu-posting niðanfyri.</p>
+<h1>Kassakladda</h1>
+<p class="section-intro">Skráset eina nýggja flyting niðanfyri.</p>
 
 <form method="POST" class="form-grid">
 
     <div class="form-group">
-        <label for="fra_konto">Frá konto</label>
-        <input type="number" id="fra_konto" name="fra_konto" required>
+        <label for="fra_konto">Fra konto</label>
+        <input type="number" id="fra_konto" name="fra_konto">
     </div>
 
     <div class="form-group">
         <label for="til_konto">Til konto</label>
-        <input type="number" id="til_konto" name="til_konto" required>
+        <input type="number" id="til_konto" name="til_konto">
     </div>
 
     <div class="form-group">
-        <label for="upphædd">Upphædd</label>
-        <input type="number" step="0.01" id="upphædd" name="upphædd" required>
+        <label for="upphaedd">Upphaedd</label>
+        <input
+            type="number"
+            step="0.01"
+            id="upphaedd"
+            name="upphaedd"
+            required>
     </div>
 
     <div class="form-group">
@@ -34,7 +39,7 @@
     </div>
 
     <div class="button-row full">
-        <button type="submit">💾 Goym</button>
+        <button type="submit">Goym</button>
     </div>
 
 </form>

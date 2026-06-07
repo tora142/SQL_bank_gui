@@ -3,7 +3,7 @@
 {% block title %}Kontoavrit{% endblock %}
 
 {% block content %}
-<h1>📄 Kontoavrit</h1>
+<h1>Kontoavrit</h1>
 <p class="section-intro">Skriva konto ID fyri at síggja bókingar og saldo.</p>
 
 <form method="POST" class="form-grid">
@@ -14,13 +14,13 @@
     </div>
 
     <div class="button-row">
-        <button type="submit">🔍 Vís bókingar</button>
+        <button type="submit">Vís bókingar</button>
     </div>
 
 </form>
 
 {% if konto_id %}
-    <h2>Yvirlit fyri konto {{ konto_id }}</h2>
+    <h2>Yvirlit yvir konto {{ konto_id }}</h2>
 {% endif %}
 
 {% if saldo is not none %}
@@ -58,7 +58,7 @@
 </div>
 {% elif konto_id %}
 <div class="empty-box">
-    Eingar bókingar funnar fyri hesa konto.
+    Ongar bókingar funnar fyri hesa konto.
 </div>
 {% endif %}
 

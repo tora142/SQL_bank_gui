@@ -10,6 +10,7 @@ app.config.from_object(Config)
 def home():
     return render_template("index.html")
 
+
 @app.route("/um")
 def um():
     return render_template("um.html")
@@ -20,12 +21,16 @@ def kassakladda():
     if request.method == "POST":
         fra_konto = request.form.get("fra_konto")
         til_konto = request.form.get("til_konto")
-        upphædd = request.form.get("upphædd")
+        upphaedd = request.form.get("upphaedd")
         tekstur = request.form.get("tekstur")
         dato = request.form.get("dato")
 
-        if float(upphædd) <= 0:
-            flash("Upphædd má vera størri enn 0", "danger")
+        if not upphaedd:
+            flash("Upphædd manglar.", "danger")
+            return redirect(url_for("kassakladda"))
+
+        if float(upphaedd) <= 0:
+            flash("Upphæddin má vera størri enn 0", "danger")
             return redirect(url_for("kassakladda"))
 
         connection = None
@@ -37,22 +42,23 @@ def kassakladda():
 
             sql = """
                 INSERT INTO KASSAKLADDA
-                (FRÁ_KONTO, TIL_KONTO, UPPHÆDD, TEKSTUR, DATO, STATUS)
+                ("FRÁ_KONTO", TIL_KONTO, "UPPHÆDD", TEKSTUR, DATO, STATUS)
                 VALUES
-                (:fra_konto, :til_konto, :upphædd, :tekstur, TO_DATE(:dato, 'YYYY-MM-DD'), :status)
+                (:fra_konto, :til_konto, :upphaedd, :tekstur,
+                 TO_DATE(:dato, 'YYYY-MM-DD'), :status)
             """
 
             cursor.execute(sql, {
-                "fra_konto": int(fra_konto),
-                "til_konto": int(til_konto),
-                "upphædd": float(upphædd),
+                "fra_konto": int(fra_konto) if fra_konto else None,
+                "til_konto": int(til_konto) if til_konto else None,
+                "upphaedd": float(upphaedd),
                 "tekstur": tekstur,
                 "dato": dato,
-                "status": "Gjort"
+                "status": "BIDAR"
             })
 
             connection.commit()
-            flash("Kassakladdu-postur varð goymdur.", "success")
+            flash("Flytingin er goymd.", "success")
             return redirect(url_for("kassakladda"))
 
         except Exception as e:
@@ -84,7 +90,6 @@ def kontoavrit():
             connection = get_connection()
             cursor = connection.cursor()
 
-            # Henta saldo fyri kontoin
             cursor.execute("""
                 SELECT SALDO
                 FROM KONTO
@@ -95,11 +100,17 @@ def kontoavrit():
             if saldo_row:
                 saldo = saldo_row[0]
 
-            # Henta bókingar/flytingar
             cursor.execute("""
-                SELECT KLADDA_ID, FRÁ_KONTO, TIL_KONTO, UPPHÆDD, TEKSTUR, DATO
+                SELECT KLADDA_ID,
+                       "FRÁ_KONTO",
+                       TIL_KONTO,
+                       "UPPHÆDD",
+                       TEKSTUR,
+                       DATO,
+                       STATUS
                 FROM KASSAKLADDA
-                WHERE FRÁ_KONTO = :konto_id OR TIL_KONTO = :konto_id
+                WHERE "FRÁ_KONTO" = :konto_id
+                   OR TIL_KONTO = :konto_id
                 ORDER BY DATO DESC
             """, {"konto_id": int(konto_id)})
 
@@ -121,5 +132,6 @@ def kontoavrit():
         saldo=saldo
     )
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)

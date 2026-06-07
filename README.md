@@ -1,6 +1,6 @@
-# 🏦 Bankaskipan GUI
+## Bankaskipan GUI
 
-## 🚀 Hvussu tú koyrir skipanina
+## Hvussu tú koyrir skipanina
 
 1. Tryggja at Python er installerað á telduni.
 
