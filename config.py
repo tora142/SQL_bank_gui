@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Uppseting til at fáa samband til databasuna
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
     DB_USER = "banki"

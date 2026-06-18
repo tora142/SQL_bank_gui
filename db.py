@@ -1,6 +1,7 @@
 import oracledb
 from config import Config
 
+# Gera samband til databasuna
 def get_connection():
     dsn = f"{Config.DB_HOST}:{Config.DB_PORT}/{Config.DB_SERVICE}"
     return oracledb.connect(
